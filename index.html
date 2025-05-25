@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notes Web App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .hidden {
+            display: none;
+        }
+        .loader {
+            border: 8px solid #444;
+            border-top: 8px solid #00ffcc;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            margin: 20px auto;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        input, button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        input {
+            width: 200px;
+        }
+        button {
+            background: #222;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+            cursor: pointer;
+        }
+        button:hover {
+            background: #00ffcc;
+            color: #000;
+            box-shadow: 0 0 20px #00ffcc, 0 0 40px #00ffcc;
+            transform: scale(1.05);
+        }
+        #cancelBtn {
+            position: relative;
+        }
+        img {
+            margin-top: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 30px #00ffcc;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Login Section -->
+    <div id="loginSection">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username"><br>
+        <input type="password" id="password" placeholder="Password"><br>
+        <button onclick="login()">Login</button>
+    </div>
+
+    <!-- Loader Section -->
+    <div id="loaderSection" class="hidden">
+        <div class="loader"></div>
+        <h2>Welcome...</h2>
+    </div>
+
+    <!-- Message Box -->
+    <div id="messageSection" class="hidden">
+        <h3>Are you really want notes?</h3>
+        <button id="okBtn" onclick="confirmOk()">OK</button>
+        <button id="cancelBtn" onmouseover="moveCancel()" onclick="moveCancel()">Cancel</button>
+    </div>
+
+    <!-- Second Loader -->
+    <div id="secondLoaderSection" class="hidden">
+        <div class="loader"></div>
+        <h2>Loading your notes...</h2>
+    </div>
+
+    <!-- Photo Section -->
+    <div id="photoSection" class="hidden">
+        <h2>Here are your notes!</h2>
+        <img class="gif-image" src="padh-le-padhai.gif" alt="Kyu Nhai Ho Rahi Padhai">
+    </div>
+
+    <script>
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            if (username && password) {
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('loaderSection').classList.remove('hidden');
+
+                setTimeout(() => {
+                    document.getElementById('loaderSection').classList.add('hidden');
+                    document.getElementById('messageSection').classList.remove('hidden');
+                }, 2000); // 2 seconds loader
+            } else {
+                alert('Please enter username and password!');
+            }
+        }
+
+        function moveCancel() {
+            const btn = document.getElementById('cancelBtn');
+            const x = Math.floor(Math.random() * (window.innerWidth - 100));
+            const y = Math.floor(Math.random() * (window.innerHeight - 50));
+            btn.style.position = 'absolute';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        function confirmOk() {
+            document.getElementById('messageSection').classList.add('hidden');
+            document.getElementById('secondLoaderSection').classList.remove('hidden');
+
+            setTimeout(() => {
+                document.getElementById('secondLoaderSection').classList.add('hidden');
+                document.getElementById('photoSection').classList.remove('hidden');
+            }, 2000); // 2 seconds second loader
+        }
+    </script>
+
+</body>
+</html>
